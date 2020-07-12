@@ -179,7 +179,7 @@ void MainWindow::on_pushButton_10_clicked()
 
     term = new SysAPI("");
     term->start("sh");
-    term->write("lscpu | grep 'Model name'");
+    term->write("lscpu | grep 'M+odel name'");
     term->closeWriteChannel();
     term->waitForFinished();
     ui->cpuModel->setText(term->readAll());
