@@ -13,7 +13,7 @@ class SysAPI : public QProcess
 public:
     QByteArray cat();
     SysAPI(QString cmd);
-    ~SysAPI();
+    ~SysAPI(); 
 private:
     QProcess itsProc;
     QString itsCmd;

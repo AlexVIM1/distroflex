@@ -18,18 +18,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
+    src/root.cpp \
     src/specs.cpp \
     src/sysapi.cpp \
     src/tickthread.cpp
 
 HEADERS += \
     src/mainwindow.h \
+    src/root.h \
     src/specs.h \
     src/sysapi.h \
     src/tickthread.h
 
 FORMS += \
-   src/mainwindow.ui
+   src/mainwindow.ui \
+   src/root.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

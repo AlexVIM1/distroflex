@@ -15,4 +15,9 @@ specs::~specs()
     itsKernel = "";
     itsDistro = "";
     itsDe = "";
+    itsCores = "";
+    itsThreads = "";
+    itsModel = "";
+    itsSudo = "";
+    itsUSBdevices = "";
 }

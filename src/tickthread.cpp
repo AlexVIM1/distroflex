@@ -1,8 +1,7 @@
 #include "tickthread.h"
 
-tickThread::tickThread(QString cmd, QString cmdClock, int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock) :
+tickThread::tickThread(QString cmd, char cmdClock[255], int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock) :
     itsCmd(cmd),
-    itsCmdClock(cmdClock),
     itsTime(time),
     itsNowSession(nowSession),
     itsSessionCPU(sessionCPU),
@@ -11,7 +10,18 @@ tickThread::tickThread(QString cmd, QString cmdClock, int time, QWidget *nowSess
     fin(new std::ifstream),
     itsOutputClock(outputClock)
 {
+    for (int i = 0; i < 255; i++)
+    {
+        itsCmdClock[i] = cmdClock[i];
+    }
+}
 
+tickThread::~tickThread()
+{
+    delete itsNowSession;
+    delete itsSessionCPU;
+    delete itsOutput;
+    delete itsOutputClock;
 }
 
 void tickThread::run() {
@@ -28,7 +38,7 @@ void tickThread::run() {
         // Getting CPU clock
 
         itsProc.start("sh");
-        itsProc.write(itsCmdClock.toLatin1());
+        itsProc.write(itsCmdClock);
         itsProc.closeWriteChannel();
         itsProc.waitForFinished();
         itsOutputClock->setText(itsProc.readAll());

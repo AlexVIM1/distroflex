@@ -3,13 +3,14 @@
 
 #include <QMainWindow>
 #include <QPushButton>
-#include <QDebug>
+#include <QMessageBox>
 #include <vector>
 #include <thread>
 
 #include "sysapi.h"
 #include "specs.h"
 #include "tickthread.h"
+#include "root.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,6 +34,14 @@ private slots:
 
     void on_pushButton_10_clicked();
 
+    void on_pushButton_7_clicked();
+
+    void on_mount_clicked();
+
+    void on_umount_clicked();
+
+    void on_mkfs_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -49,10 +58,6 @@ private:
 
     SysAPI *term;
 
-    // API to using devices
-
-    SysAPI *dev;
-
     // What category is now active
 
     QWidget *nowSession;
@@ -60,6 +65,10 @@ private:
     // Thread to tick sensors
 
     tickThread *th;
+
+    // Root dialog
+
+    root *dialog;
 };
 
 #endif // MAINWINDOW_H
