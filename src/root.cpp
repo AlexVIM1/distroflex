@@ -19,9 +19,4 @@ root::~root()
 void root::on_buttonBox_accepted()
 {
     itsOS->setSudo(ui->sudo->text());
-    itsTerm->start("sh");
-    itsTerm->write("echo $USER");
-    itsTerm->closeWriteChannel();
-    itsTerm->waitForFinished();
-    itsOS->setUser(itsTerm->readAll());
 }

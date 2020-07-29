@@ -17,9 +17,11 @@ SysAPI::~SysAPI()
 
 // Streaming command result to user
 
-QByteArray SysAPI::cat()
+QProcess *SysAPI::cat()
 {
-    itsProc.start(itsCmd);
+    itsProc.start("sh");
+    itsProc.write(itsCmd.toUtf8());
+    itsProc.closeWriteChannel();
     itsProc.waitForFinished();
-    return itsProc.readAll();
+    return &itsProc;
 }

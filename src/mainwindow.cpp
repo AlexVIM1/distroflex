@@ -10,17 +10,17 @@ MainWindow::MainWindow(QWidget *parent) :
     // Setting Kernel
 
     term = new SysAPI("uname -r");
-    QString kernel = term->cat();
+    QString kernel = term->cat()->readAll();
 
     // Setting DE
 
     term = new SysAPI("printenv XDG_CURRENT_DESKTOP");
-    QString de = term->cat();
+    QString de = term->cat()->readAll();
 
     // Setting Distro
 
     term = new SysAPI("lsb_release -is");
-    QString distro = term->cat();
+    QString distro = term->cat()->readAll();
 
     // Initializing OS specifications
 
@@ -55,6 +55,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->mkfsEdit->setPlaceholderText("Filesystem");
     ui->mkfsDeviceEdit->setVisible(false);
     ui->mkfsDeviceEdit->setPlaceholderText("Device");
+    ui->videocon->setVisible(false);
+    ui->videocontitle->setVisible(false);
+    ui->displayset->setVisible(false);
+    ui->displaysettitle->setVisible(false);
+    ui->wres->setVisible(false);
+    ui->wres->setPlaceholderText("Width resolution");
+    ui->hres->setVisible(false);
+    ui->hres->setPlaceholderText("Height resolution");
+    ui->hz->setVisible(false);
+    ui->hz->setPlaceholderText("Refresh rate");
+    ui->input->setVisible(false);
+    ui->input->setPlaceholderText("Display input");
+    ui->changedisp->setVisible(false);
+    ui->videosettingbutton->setVisible(false);
+    ui->alsatext->setVisible(false);
+    ui->alsavol->setVisible(false);
+    ui->patext->setVisible(false);
+    ui->pavol->setVisible(false);
+    ui->alsaslider->setVisible(false);
+    ui->paslider->setVisible(false);
 
     // Setting root access
 
@@ -102,23 +122,17 @@ void MainWindow::on_pushButton_5_clicked()
 
     // Setting Kernel
 
-    QString *kernel;
-    kernel = new QString;
-    *kernel = OS->getKernel();
-    ui->kernelName->setText(*kernel);
+    QString kernel = OS->getKernel();
+    ui->kernelName->setText(kernel);
     ui->label_2->setVisible(true);
     ui->kernelName->setVisible(true);
     enabledWidgets.push_back(ui->label_2);
     enabledWidgets.push_back(ui->kernelName);
-    delete kernel;
-    kernel = nullptr;
 
     // Setting DE
 
-    QString *DE;
-    DE = new QString;
-    *DE = OS->getDe();
-    ui->DEname->setText(*DE);
+    QString DE = OS->getDe();
+    ui->DEname->setText(DE);
     ui->label_3->setVisible(true);
     ui->DEname->setVisible(true);
     enabledWidgets.push_back(ui->label_3);
@@ -126,10 +140,8 @@ void MainWindow::on_pushButton_5_clicked()
 
     // Setting Distro
 
-    QString *distro;
-    distro = new QString;
-    *distro = OS->getDistro();
-    ui->distroName->setText(*distro);
+    QString distro = OS->getDistro();
+    ui->distroName->setText(distro);
     ui->label_4->setVisible(true);
     ui->distroName->setVisible(true);
     enabledWidgets.push_back(ui->label_4);
@@ -172,7 +184,7 @@ void MainWindow::on_DEsettings_clicked()
     // Starting DE settings client
 
     if (OS->getDe() == "KDE\n") {
-        term->QProcess::start("systemsettings5");
+        term->start("systemsettings5");
     }
 }
 
@@ -205,13 +217,9 @@ void MainWindow::on_pushButton_10_clicked()
 
     // Getting CPU info
 
-    term = new SysAPI("");
-    term->start("sh");
-    term->write("lscpu | grep 'Model name'");
-    term->closeWriteChannel();
-    term->waitForFinished();
-    ui->cpuModel->setText(term->readAll());
-    OS->setModel(term->readAll());
+    term = new SysAPI("lscpu | grep 'Model name'");
+    ui->cpuModel->setText(term->cat()->readAll());
+    OS->setModel(term->cat()->readAll());
 
     QString cores;
     QString threads;
@@ -220,15 +228,12 @@ void MainWindow::on_pushButton_10_clicked()
     cores = ui->coresLabel->text();
     term = new SysAPI("nproc");
     cores.append("                                  ");
-    cores.append(term->cat());
+    cores.append(term->cat()->readAll());
     ui->coresLabel->setText(cores);
     OS->setCores(cores);
 
-    term->start("sh");
-    term->write("lscpu | grep Thread");
-    term->closeWriteChannel();
-    term->waitForFinished();
-    ui->threadsLabel->setText(term->readAll());
+    term = new SysAPI("lscpu | grep Thread");
+    ui->threadsLabel->setText(term->cat()->readAll());
     OS->setThreads(threads);
 
     // Getting output temperature and clock
@@ -275,12 +280,12 @@ void MainWindow::on_pushButton_7_clicked()
     // Getting USB devices
 
     term = new SysAPI("lsusb");
-    ui->usb->setText(term->cat());
+    ui->usb->setText(term->cat()->readAll());
 
     // Getting Memory devices
 
     term = new SysAPI("df -h");
-    ui->memdev->setText(term->cat());
+    ui->memdev->setText(term->cat()->readAll());
 }
 
 void MainWindow::on_mount_clicked()
@@ -295,12 +300,8 @@ void MainWindow::on_mount_clicked()
     {
         dir = "null_dir";
     }
-    term->start("sh");
-    term->waitForStarted();
-    term->write(("echo " + OS->getSudo() + " | sudo -S echo test\n").toUtf8());
-    term->closeWriteChannel();
-    term->waitForFinished();
-    QString exitSudoStd = term->readAllStandardOutput();
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
     if (exitSudoStd.isEmpty())
     {
         ui->statusbar->showMessage("Wrong sudo password");
@@ -308,29 +309,21 @@ void MainWindow::on_mount_clicked()
     }
     if (!exitSudoStd.isEmpty())
     {
-        term->start("sh");
-        term->waitForStarted();
-        term->write(("echo " + OS->getSudo() + " | sudo -S umount " + dev).toUtf8());
-        term->closeWriteChannel();
-        term->waitForFinished();
+        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S umount " + dev);
         ui->statusbar->showMessage("Mounting " + dev + " to " + dir);
-        term->start("sh");
-        term->waitForStarted();
-        term->write(("echo " + OS->getSudo() + " | sudo -S mount " + dev + " " + dir + " && echo check").toUtf8());
-        term->closeWriteChannel();
-        term->waitForFinished();
-        QString exitMountStd = term->readAllStandardOutput();
+        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S mount " + dev + " " + dir + " && echo check");
+        QString exitMountStd = term->cat()->readAllStandardOutput();
         if (!exitMountStd.isEmpty())
         {
             ui->statusbar->showMessage(dev + " mounted succesfully");
         }
         if (exitMountStd.isEmpty())
         {
-            ui->statusbar->showMessage("Error: " + term->readAllStandardError());
+            ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
         }
     }
     term = new SysAPI("df -h");
-    ui->memdev->setText(term->cat());
+    ui->memdev->setText(term->cat()->readAll());
 }
 
 void MainWindow::on_umount_clicked()
@@ -341,11 +334,7 @@ void MainWindow::on_umount_clicked()
         dev = "null_device";
     }
     ui->statusbar->showMessage("Verifying root");
-    term->start("sh");
-    term->waitForStarted();
-    term->write(("echo " + OS->getSudo() + " | sudo -S echo test\n").toUtf8());
-    term->closeWriteChannel();
-    term->waitForFinished();
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
     QString exitSudoStd = term->readAllStandardOutput();
     if (exitSudoStd.isEmpty())
     {
@@ -355,12 +344,8 @@ void MainWindow::on_umount_clicked()
     if (!exitSudoStd.isEmpty())
     {
         ui->statusbar->showMessage("Umounting " + dev);
-        term->start("sh");
-        term->waitForStarted();
-        term->write(("echo " + OS->getSudo() + " | sudo -S umount " + dev + " && echo check").toUtf8());
-        term->closeWriteChannel();
-        term->waitForFinished();
-        QString exitMountStd = term->readAllStandardOutput();
+        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S umount " + dev + " && echo check");
+        QString exitMountStd = term->cat()->readAllStandardOutput();
         if (!exitMountStd.isEmpty())
         {
             ui->statusbar->showMessage(dev + " umounted successfully");
@@ -371,7 +356,7 @@ void MainWindow::on_umount_clicked()
         }
     }
     term = new SysAPI("df -h");
-    ui->memdev->setText(term->cat());
+    ui->memdev->setText(term->cat()->readAll());
 }
 
 void MainWindow::on_mkfs_clicked()
@@ -386,12 +371,8 @@ void MainWindow::on_mkfs_clicked()
     {
         fs = "null_filesystem";
     }
-    term->start("sh");
-    term->waitForStarted();
-    term->write(("echo " + OS->getSudo() + " | sudo -S echo test\n").toUtf8());
-    term->closeWriteChannel();
-    term->waitForFinished();
-    QString exitSudoStd = term->readAllStandardOutput();
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
     if (exitSudoStd.isEmpty())
     {
         ui->statusbar->showMessage("Wrong sudo password");
@@ -400,12 +381,8 @@ void MainWindow::on_mkfs_clicked()
     if (!exitSudoStd.isEmpty())
     {
         ui->statusbar->showMessage("Formatting " + dev + " to " + fs);
-        term->start("sh");
-        term->waitForStarted();
-        term->write(("echo " + OS->getSudo() + " | sudo -S mkfs." + fs + " " + dev + " && echo check").toUtf8());
-        term->closeWriteChannel();
-        term->waitForFinished();
-        QString exitMountStd = term->readAllStandardOutput();
+        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S mkfs." + fs + " " + dev + " && echo check");
+        QString exitMountStd = term->cat()->readAllStandardOutput();
         if (!exitMountStd.isEmpty())
         {
             ui->statusbar->showMessage(dev + " formatted " + "to " + fs + " successfully");
@@ -416,5 +393,131 @@ void MainWindow::on_mkfs_clicked()
         }
     }
     term = new SysAPI("df -h");
-    ui->memdev->setText(term->cat());
+    ui->memdev->setText(term->cat()->readAll());
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    hideWidgets();
+    ui->videocon->setVisible(true);
+    ui->videocontitle->setVisible(true);
+    ui->displayset->setVisible(true);
+    ui->displaysettitle->setVisible(true);
+    ui->wres->setVisible(true);
+    ui->hres->setVisible(true);
+    ui->hz->setVisible(true);
+    ui->input->setVisible(true);
+    ui->changedisp->setVisible(true);
+    enabledWidgets.push_back(ui->videocon);
+    enabledWidgets.push_back(ui->videocontitle);
+    enabledWidgets.push_back(ui->displayset);
+    enabledWidgets.push_back(ui->displaysettitle);
+    enabledWidgets.push_back(ui->wres);
+    enabledWidgets.push_back(ui->hres);
+    enabledWidgets.push_back(ui->hz);
+    enabledWidgets.push_back(ui->input);
+    enabledWidgets.push_back(ui->changedisp);
+
+    term = new SysAPI("lspci | grep VGA");
+    ui->videocon->setText(term->cat()->readAll());
+
+    term = new SysAPI("xrandr");
+    ui->displayset->setText(term->cat()->readAll());
+
+    term = new SysAPI("nvidia-settings -l");
+    if (term->cat()->readAllStandardError().isEmpty())
+    {
+        ui->videosettingbutton->setText("Nvidia Settings");
+        QPixmap nvidiaTempPix(":/icons/nvidia.png");
+        QIcon nvidiaTempIcon(nvidiaTempPix);
+        ui->videosettingbutton->setIcon(nvidiaTempIcon);
+        OS->setVideoSettingsButtonAction("nvidia");
+        ui->videosettingbutton->setVisible(true);
+        enabledWidgets.push_back(ui->videosettingbutton);
+    }
+}
+
+void MainWindow::on_changedisp_clicked()
+{
+    QString wres = ui->wres->text();
+    QString hres = ui->hres->text();
+    QString hz = ui->hz->text();
+    QString input = ui->input->text();
+    if (wres.isEmpty())
+    {
+        wres = "0";
+    }
+    if (hres.isEmpty())
+    {
+        hres = "0";
+    }
+    if (hz.isEmpty())
+    {
+        hz = "0";
+    }
+    if (input.isEmpty())
+    {
+        input = "null";
+    }
+    term = new SysAPI("xrandr --output " + input + " --mode " + wres + "x" + hres + " --rate " + hz);
+    ui->statusbar->showMessage(term->cat()->readAllStandardOutput() + term->cat()->readAllStandardOutput());
+    term = new SysAPI("xrandr");
+    ui->displayset->setText(term->cat()->readAll());
+}
+
+void MainWindow::on_videosettingbutton_clicked()
+{
+    if (OS->getVideoSettingsButtonAction() == "nvidia")
+    {
+        term->start("nvidia-settings");
+    }
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    hideWidgets();
+    bool alsa = false;
+    bool pa = false;
+    term = new SysAPI("aplay -l");
+    if (!term->cat()->readAll().isEmpty())
+    {
+        alsa = true;
+        ui->alsatext->setVisible(true);
+        ui->alsavol->setVisible(true);
+        ui->alsaslider->setVisible(true);
+        enabledWidgets.push_back(ui->alsatext);
+        enabledWidgets.push_back(ui->alsavol);
+        enabledWidgets.push_back(ui->alsaslider);
+    }
+    term = new SysAPI("pactl list");
+    if (!term->cat()->readAll().isEmpty())
+    {
+        pa = true;
+        ui->patext->setVisible(true);
+        ui->pavol->setVisible(true);
+        ui->paslider->setVisible(true);
+        enabledWidgets.push_back(ui->patext);
+        enabledWidgets.push_back(ui->pavol);
+        enabledWidgets.push_back(ui->paslider);
+    }
+
+    if (alsa)
+    {
+        term = new SysAPI("amixer sget Master | awk -F'[][]' '{ print $2 }'");
+        QString alsaVolume = term->cat()->readAll();
+        ui->alsavol->setText("Volume: " + alsaVolume);
+        alsaVolume.remove(QRegExp("[^a-zA-Z\\d\\s]"));
+        ui->alsaslider->setValue(alsaVolume.toInt());
+    }
+    if (pa)
+    {
+        term = new SysAPI("pactl list sinks | perl -000ne 'if(/#1/){/(Volume:.*)/; print ""$1\n""}'");
+        QString paVolume = term->cat()->readAll();
+
+        // pactl already has "Volume: " in line
+
+        ui->pavol->setText(paVolume);
+        paVolume.remove(QRegExp("[^a-zA-Z\\d\\s]"));
+        ui->statusbar->showMessage(paVolume);
+    }
 }

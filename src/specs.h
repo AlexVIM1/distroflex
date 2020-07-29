@@ -25,8 +25,8 @@ public:
     QString getModel() const { return itsModel; }
     void setSudo(QString sudo) { itsSudo = sudo; }
     QString getSudo() const { return itsSudo; }
-    void setUser(QString user) { itsUser = user; }
-    QString getUser() const { return itsUser; }
+    void setVideoSettingsButtonAction(QString videoSettingsButtonAction) { itsVideoSettingsButtonAction = videoSettingsButtonAction; }
+    QString getVideoSettingsButtonAction() const { return itsVideoSettingsButtonAction; }
     specs() { }
 private:
     QString itsKernel;
@@ -37,7 +37,7 @@ private:
     QString itsThreads;
     QString itsModel;
     QString itsSudo;
-    QString itsUser;
+    QString itsVideoSettingsButtonAction;
 };
 
 #endif // SPECS_H

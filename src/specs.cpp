@@ -20,4 +20,5 @@ specs::~specs()
     itsModel = "";
     itsSudo = "";
     itsUSBdevices = "";
+    itsVideoSettingsButtonAction = "";
 }

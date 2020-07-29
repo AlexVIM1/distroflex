@@ -10,5 +10,6 @@
         <file>software-icon.png</file>
         <file>other-icon.png</file>
         <file>plasma-settings-icon.png</file>
+        <file>nvidia.png</file>
     </qresource>
 </RCC>

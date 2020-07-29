@@ -11,7 +11,7 @@
 class SysAPI : public QProcess
 {
 public:
-    QByteArray cat();
+    QProcess *cat();
     SysAPI(QString cmd);
     ~SysAPI(); 
 private:
