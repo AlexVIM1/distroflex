@@ -12,11 +12,14 @@ class SysAPI : public QProcess
 {
 public:
     QProcess *cat();
+    QProcess *catLimited();
     SysAPI(QString cmd);
+    SysAPI(QString cmd, int time);
     ~SysAPI(); 
 private:
     QProcess itsProc;
     QString itsCmd;
+    int itsTime;
 };
 
 #endif // SYSAPI_H

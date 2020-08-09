@@ -1,19 +1,15 @@
 #include "tickthread.h"
 
-tickThread::tickThread(QString cmd, char cmdClock[255], int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock) :
+tickThread::tickThread(QString cmd, QString cmdClock, int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock) :
     itsCmd(cmd),
+    itsCmdClock(cmdClock),
     itsTime(time),
     itsNowSession(nowSession),
     itsSessionCPU(sessionCPU),
     itsOutput(output),
-    fout(new std::ofstream),
-    fin(new std::ifstream),
     itsOutputClock(outputClock)
 {
-    for (int i = 0; i < 255; i++)
-    {
-        itsCmdClock[i] = cmdClock[i];
-    }
+
 }
 
 tickThread::~tickThread()
@@ -29,19 +25,13 @@ void tickThread::run() {
 
         // Getting core temperature
 
-        itsProc.start("sh");
-        itsProc.write(itsCmd.toLatin1());
-        itsProc.closeWriteChannel();
-        itsProc.waitForFinished();
-        itsOutput->setText(itsProc.readAll());
+        itsProc = new SysAPI(itsCmd);
+        itsOutput->setText(itsProc->cat()->readAll());
 
         // Getting CPU clock
 
-        itsProc.start("sh");
-        itsProc.write(itsCmdClock);
-        itsProc.closeWriteChannel();
-        itsProc.waitForFinished();
-        itsOutputClock->setText(itsProc.readAll());
+        itsProc = new SysAPI(itsCmdClock);
+        itsOutputClock->setText(itsProc->cat()->readAll());
 
         std::this_thread::sleep_for(std::chrono::milliseconds(itsTime));
     }

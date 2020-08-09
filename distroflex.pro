@@ -16,6 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    src/confirm.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/root.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
     src/tickthread.cpp
 
 HEADERS += \
+    src/confirm.h \
     src/mainwindow.h \
     src/root.h \
     src/specs.h \
@@ -31,6 +33,7 @@ HEADERS += \
     src/tickthread.h
 
 FORMS += \
+   src/confirm.ui \
    src/mainwindow.ui \
    src/root.ui
 

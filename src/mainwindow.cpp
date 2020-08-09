@@ -71,10 +71,32 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->videosettingbutton->setVisible(false);
     ui->alsatext->setVisible(false);
     ui->alsavol->setVisible(false);
-    ui->patext->setVisible(false);
-    ui->pavol->setVisible(false);
     ui->alsaslider->setVisible(false);
-    ui->paslider->setVisible(false);
+    ui->alsaslider->setMinimum(0);
+    ui->alsaslider->setMaximum(100);
+    ui->micvol->setVisible(false);
+    ui->micslider->setVisible(false);
+    ui->micslider->setMinimum(0);
+    ui->micslider->setMaximum(100);
+    ui->packagestext->setVisible(false);
+    ui->packages->setVisible(false);
+    ui->searchpackage->setVisible(false);
+    ui->searchpackage->setPlaceholderText("Package");
+    ui->searchbutton->setVisible(false);
+    ui->removepackage->setVisible(false);
+    ui->removepackage->setPlaceholderText("Package");
+    ui->removebutton->setVisible(false);
+    ui->installpackage->setVisible(false);
+    ui->installpackage->setPlaceholderText("Package");
+    ui->installbutton->setVisible(false);
+    ui->upd->setVisible(false);
+    ui->connection->setVisible(false);
+    ui->connect_to->setVisible(false);
+    ui->connect_to->setPlaceholderText("Connect to server and set time");
+    ui->start_ping->setVisible(false);
+    ui->ping->setVisible(false);
+    ui->contime->setVisible(false);
+    ui->dhcpcd->setVisible(false);
 
     // Setting root access
 
@@ -118,7 +140,6 @@ void MainWindow::on_pushButton_5_clicked()
     // Clear displaying widgets in the configuring panel
 
     hideWidgets();
-    enabledWidgets.clear();
 
     // Setting Kernel
 
@@ -176,6 +197,48 @@ void MainWindow::on_pushButton_6_clicked()
         ui->DEsettings->setIcon(PlasmaSettingsIcon);
         enabledWidgets.push_back(ui->DEsettings);
     }
+
+    // Initializing XFCE System Settings
+
+    if (OS->getDe().toLower() == "xfce\n") {
+        ui->label_5->setVisible(true);
+        ui->DEsettings->setVisible(true);
+        enabledWidgets.push_back(ui->label_5);
+        enabledWidgets.push_back(ui->DEsettings);
+        ui->DEsettings->setText("XFCE Settings");
+        QPixmap XfceSettingsPixmap(":/icons/xfce-icon.png");
+        QIcon XfceSettingsIcon(XfceSettingsPixmap);
+        ui->DEsettings->setIcon(XfceSettingsIcon);
+        enabledWidgets.push_back(ui->DEsettings);
+    }
+
+    // Initializing GNOME System Settings
+
+    if (OS->getDe().toLower() == "gnome\n") {
+        ui->label_5->setVisible(true);
+        ui->DEsettings->setVisible(true);
+        enabledWidgets.push_back(ui->label_5);
+        enabledWidgets.push_back(ui->DEsettings);
+        ui->DEsettings->setText("GNOME Control Center");
+        QPixmap GnomeSettingsPixmap(":/icons/gnome-icon.png");
+        QIcon GnomeSettingsIcon(GnomeSettingsPixmap);
+        ui->DEsettings->setIcon(GnomeSettingsIcon);
+        enabledWidgets.push_back(ui->DEsettings);
+    }
+
+    // Initializing LXQT System Settings
+
+    if (OS->getDe().toLower() == "lxqt\n") {
+        ui->label_5->setVisible(true);
+        ui->DEsettings->setVisible(true);
+        enabledWidgets.push_back(ui->label_5);
+        enabledWidgets.push_back(ui->DEsettings);
+        ui->DEsettings->setText("LxQt Settings");
+        QPixmap GnomeSettingsPixmap(":/icons/lxqt-icon.png");
+        QIcon GnomeSettingsIcon(GnomeSettingsPixmap);
+        ui->DEsettings->setIcon(GnomeSettingsIcon);
+        enabledWidgets.push_back(ui->DEsettings);
+    }
 }
 
 void MainWindow::on_DEsettings_clicked()
@@ -183,8 +246,17 @@ void MainWindow::on_DEsettings_clicked()
 
     // Starting DE settings client
 
-    if (OS->getDe() == "KDE\n") {
-        term->start("systemsettings5");
+    if (OS->getDe().toLower() == "kde\n") {
+        term->QProcess::start("systemsettings5");
+    }
+    if (OS->getDe().toLower() == "lxqt\n") {
+        term->QProcess::start("lxqt-config");
+    }
+    if (OS->getDe().toLower() == "gnome\n") {
+        term->QProcess::start("gnome-control-center");
+    }
+    if (OS->getDe().toLower() == "xfce\n") {
+        term->QProcess::start("xfce4-settings-manager");
     }
 }
 
@@ -380,24 +452,35 @@ void MainWindow::on_mkfs_clicked()
     }
     if (!exitSudoStd.isEmpty())
     {
-        ui->statusbar->showMessage("Formatting " + dev + " to " + fs);
-        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S mkfs." + fs + " " + dev + " && echo check");
-        QString exitMountStd = term->cat()->readAllStandardOutput();
-        if (!exitMountStd.isEmpty())
+        confirmOperation = new confirm("Formate " + dev + " to " + fs + "?");
+        confirmOperation->setModal(true);
+        confirmOperation->exec();
+        if (confirmOperation->getResult())
         {
-            ui->statusbar->showMessage(dev + " formatted " + "to " + fs + " successfully");
+            ui->statusbar->showMessage("Formatting " + dev + " to " + fs);
+            term = new SysAPI("echo " + OS->getSudo() + " | sudo -S mkfs." + fs + " " + dev + " && echo check");
+            QString exitMountStd = term->cat()->readAllStandardOutput();
+            if (!exitMountStd.isEmpty())
+            {
+                ui->statusbar->showMessage(dev + " formatted " + "to " + fs + " successfully");
+            }
+            if (exitMountStd.isEmpty())
+            {
+                ui->statusbar->showMessage("Error:\n" + term->readAllStandardError());
+            }
+            term = new SysAPI("df -h");
+            ui->memdev->setText(term->cat()->readAll());
         }
-        if (exitMountStd.isEmpty())
+        if (!confirmOperation->getResult())
         {
-            ui->statusbar->showMessage("Error:\n" + term->readAllStandardError());
+            ui->statusbar->showMessage("Cancelled");
         }
     }
-    term = new SysAPI("df -h");
-    ui->memdev->setText(term->cat()->readAll());
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
+    nowSession = ui->pushButton_3;
     hideWidgets();
     ui->videocon->setVisible(true);
     ui->videocontitle->setVisible(true);
@@ -469,55 +552,420 @@ void MainWindow::on_videosettingbutton_clicked()
 {
     if (OS->getVideoSettingsButtonAction() == "nvidia")
     {
-        term->start("nvidia-settings");
+        term->QProcess::start("nvidia-settings");
     }
 }
 
 void MainWindow::on_pushButton_clicked()
 {
+    nowSession = ui->pushButton;
     hideWidgets();
     bool alsa = false;
     bool pa = false;
-    term = new SysAPI("aplay -l");
+    term = new SysAPI("amixer");
     if (!term->cat()->readAll().isEmpty())
     {
         alsa = true;
         ui->alsatext->setVisible(true);
         ui->alsavol->setVisible(true);
         ui->alsaslider->setVisible(true);
+        ui->micvol->setVisible(true);
+        ui->micslider->setVisible(true);
         enabledWidgets.push_back(ui->alsatext);
         enabledWidgets.push_back(ui->alsavol);
         enabledWidgets.push_back(ui->alsaslider);
+        enabledWidgets.push_back(ui->micvol);
+        enabledWidgets.push_back(ui->micslider);
     }
-    term = new SysAPI("pactl list");
-    if (!term->cat()->readAll().isEmpty())
-    {
-        pa = true;
-        ui->patext->setVisible(true);
-        ui->pavol->setVisible(true);
-        ui->paslider->setVisible(true);
-        enabledWidgets.push_back(ui->patext);
-        enabledWidgets.push_back(ui->pavol);
-        enabledWidgets.push_back(ui->paslider);
-    }
-
     if (alsa)
     {
-        term = new SysAPI("amixer sget Master | awk -F'[][]' '{ print $2 }'");
+
+        // ALSA 'Master' category volume
+
+        term = new SysAPI("amixer sget 'Master' | awk -F'[][]' '{ print $2 }'");
         QString alsaVolume = term->cat()->readAll();
-        ui->alsavol->setText("Volume: " + alsaVolume);
+        ui->alsavol->setText("Master volume: " + alsaVolume);
         alsaVolume.remove(QRegExp("[^a-zA-Z\\d\\s]"));
         ui->alsaslider->setValue(alsaVolume.toInt());
+
+        // ALSA 'Rear Mic' category volume
+
+        term = new SysAPI("amixer sget 'Rear Mic' | awk -F'[][]' '{ print $2 }'");
+        QString micVolume = term->cat()->readAll();
+        ui->micvol->setText("Rear Mic volume: " + micVolume);
+        alsaVolume.remove(QRegExp("[^a-zA-Z\\d\\s]"));
+        ui->micslider->setValue(alsaVolume.toInt());
     }
-    if (pa)
+}
+
+void MainWindow::on_alsaslider_sliderMoved(int position)
+{
+    term = new SysAPI("amixer sset 'Master' " + QString::number(position) + "%");
+    term->cat();
+    term = new SysAPI("amixer sget 'Master' | awk -F'[][]' '{ print $2 }'");
+    QString alsaVolume = term->cat()->readAll();
+    ui->alsavol->setText("Volume: " + alsaVolume);
+}
+
+void MainWindow::on_micslider_sliderMoved(int position)
+{
+    term = new SysAPI("amixer sset 'Rear Mic' " + QString::number(position) + "%");
+    term->cat();
+    term = new SysAPI("amixer sget 'Rear Mic' | awk -F'[][]' '{ print $2 }'");
+    QString micVolume = term->cat()->readAll();
+    ui->micvol->setText("Rear Mic volume: " + micVolume);
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    nowSession = ui->pushButton_4;
+    hideWidgets();
+    ui->packagestext->setVisible(true);
+    ui->packages->setVisible(true);
+    ui->searchpackage->setVisible(true);
+    ui->searchbutton->setVisible(true);
+    ui->removepackage->setVisible(true);
+    ui->removebutton->setVisible(true);
+    ui->installpackage->setVisible(true);
+    ui->installbutton->setVisible(true);
+    ui->upd->setVisible(true);
+    enabledWidgets.push_back(ui->packagestext);
+    enabledWidgets.push_back(ui->packages);
+    enabledWidgets.push_back(ui->searchpackage);
+    enabledWidgets.push_back(ui->searchbutton);
+    enabledWidgets.push_back(ui->removepackage);
+    enabledWidgets.push_back(ui->removebutton);
+    enabledWidgets.push_back(ui->installpackage);
+    enabledWidgets.push_back(ui->installbutton);
+    enabledWidgets.push_back(ui->upd);
+    term = new SysAPI("pacman -h");
+    if (!term->cat()->readAllStandardOutput().isEmpty())
     {
-        term = new SysAPI("pactl list sinks | perl -000ne 'if(/#1/){/(Volume:.*)/; print ""$1\n""}'");
-        QString paVolume = term->cat()->readAll();
+        OS->setPackMgr(PACMAN);
+        ui->packagestext->setText("Pacman:");
+        term = new SysAPI("pacman -Q");
+        ui->packages->setText(term->cat()->readAll());
+    }
+    term = new SysAPI("apt -h");
+    if (!term->cat()->readAllStandardOutput().isEmpty())
+    {
+        OS->setPackMgr(APT);
+        ui->packagestext->setText("APT:");
+        term = new SysAPI("apt list --installed");
+        ui->packages->setText(term->cat()->readAll());
+    }
+    term = new SysAPI("zypper packages --installed-only");
+    if (!term->cat()->readAllStandardOutput().isEmpty())
+    {
+        OS->setPackMgr(ZYPPER);
+        ui->packagestext->setText("Zypper:");
+        term = new SysAPI("zypper packages --installed-only");
+        ui->packages->setText(term->cat()->readAll());
+    }
+}
 
-        // pactl already has "Volume: " in line
+void MainWindow::on_searchbutton_clicked()
+{
+    if (OS->getPackMgr() == PACMAN)
+    {
+        term = new SysAPI("pacman -Q | grep '" + ui->searchpackage->text() + "'");
+        ui->packages->setText(term->cat()->readAll());
+    }
+    if (OS->getPackMgr() == APT)
+    {
+        term = new SysAPI("apt list --installed | grep '" + ui->searchpackage->text() + "'");
+        ui->packages->setText(term->cat()->readAll());
+    }
+    if (OS->getPackMgr() == ZYPPER)
+    {
+        term = new SysAPI("zypper packages --installed-only | grep '" + ui->searchpackage->text() + "'");
+        ui->packages->setText(term->cat()->readAll());
+    }
+}
 
-        ui->pavol->setText(paVolume);
-        paVolume.remove(QRegExp("[^a-zA-Z\\d\\s]"));
-        ui->statusbar->showMessage(paVolume);
+void MainWindow::on_removebutton_clicked()
+{
+    QString pkg = ui->removepackage->text();
+    if (pkg.isEmpty())
+    {
+        pkg = "null_pkg";
+    }
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
+    if (exitSudoStd.isEmpty())
+    {
+        ui->statusbar->showMessage("Wrong sudo password");
+        return;
+    }
+    if (!exitSudoStd.isEmpty())
+    {
+        confirmOperation = new confirm("Remove " + pkg + "?");
+        confirmOperation->setModal(true);
+        confirmOperation->exec();
+        if (confirmOperation->getResult())
+        {
+            if (OS->getPackMgr() == PACMAN)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S pacman -R " + pkg + " --noconfirm && echo check");
+                QString exitPacmanRemoveStd = term->cat()->readAllStandardOutput();
+                if (!exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully removed");
+                }
+                if (exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("pacman -Q");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == APT)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S apt -y remove " + pkg + " && echo check");
+                QString exitPacmanRemoveStd = term->cat()->readAllStandardOutput();
+                if (!exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully removed");
+                }
+                if (exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("apt list --installed");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == ZYPPER)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S zypper -n remove " + pkg + " && echo check");
+                QString exitPacmanRemoveStd = term->cat()->readAllStandardOutput();
+                if (!exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully removed");
+                }
+                if (exitPacmanRemoveStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("zypper packages --installed-only");
+                ui->packages->setText(term->cat()->readAll());
+            }
+        }
+        if (!confirmOperation->getResult())
+        {
+            ui->statusbar->showMessage("Cancelled");
+        }
+    }
+}
+
+void MainWindow::on_installbutton_clicked()
+{
+    QString pkg = ui->installpackage->text();
+    if (pkg.isEmpty())
+    {
+        pkg = "null_pkg";
+    }
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
+    if (exitSudoStd.isEmpty())
+    {
+        ui->statusbar->showMessage("Wrong sudo password");
+        return;
+    }
+    if (!exitSudoStd.isEmpty())
+    {
+        confirmOperation = new confirm("Install " + pkg + "?");
+        confirmOperation->setModal(true);
+        confirmOperation->exec();
+        if (confirmOperation->getResult())
+        {
+            if (OS->getPackMgr() == PACMAN)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S pacman -S " + pkg + " --noconfirm && echo check");
+                QString exitPacmanInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitPacmanInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully installed");
+                }
+                if (exitPacmanInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("pacman -Q");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == APT)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S apt -y install " + pkg + " && echo check");
+                QString exitAptInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitAptInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully installed");
+                }
+                if (exitAptInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("apt list --installed");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == ZYPPER)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S zypper -n install " + pkg + " && echo check");
+                QString exitZypperInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitZypperInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage(pkg + " successfully installed");
+                }
+                if (exitZypperInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("zypper packages --installed-only");
+                ui->packages->setText(term->cat()->readAll());
+            }
+        }
+        if (!confirmOperation->getResult())
+        {
+            ui->statusbar->showMessage("Cancelled");
+        }
+    }
+}
+
+void MainWindow::on_upd_clicked()
+{
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
+    if (exitSudoStd.isEmpty())
+    {
+        ui->statusbar->showMessage("Wrong sudo password");
+        return;
+    }
+    if (!exitSudoStd.isEmpty())
+    {
+        confirmOperation = new confirm("Update system?");
+        confirmOperation->setModal(true);
+        confirmOperation->exec();
+        if (confirmOperation->getResult())
+        {
+            if (OS->getPackMgr() == PACMAN)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S pacman -Syu --noconfirm && echo check");
+                QString exitPacmanInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitPacmanInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Successfully updated");
+                }
+                if (exitPacmanInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("pacman -Q");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == APT)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S apt -y update && sudo apt -y upgrade && echo check");
+                QString exitAptInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitAptInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Successfully updated");
+                }
+                if (exitAptInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("apt list --installed");
+                ui->packages->setText(term->cat()->readAll());
+            }
+            if (OS->getPackMgr() == ZYPPER)
+            {
+                term = new SysAPI("echo " + OS->getSudo() + " | sudo -S zypper -n update && echo check");
+                QString exitZypperInstallStd = term->cat()->readAllStandardOutput();
+                if (!exitZypperInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Successfully updated");
+                }
+                if (exitZypperInstallStd.isEmpty())
+                {
+                    ui->statusbar->showMessage("Error: " + term->cat()->readAllStandardError());
+                }
+                term = new SysAPI("zypper packages --installed-only");
+                ui->packages->setText(term->cat()->readAll());
+            }
+        }
+        if (!confirmOperation->getResult())
+        {
+            ui->statusbar->showMessage("Cancelled");
+        }
+    }
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    nowSession = ui->pushButton_2;
+    hideWidgets();
+    ui->connect_to->setVisible(true);
+    ui->start_ping->setVisible(true);
+    ui->ping->setVisible(true);
+    ui->connection->setVisible(true);
+    ui->contime->setVisible(true);
+    ui->dhcpcd->setVisible(true);
+    enabledWidgets.push_back(ui->connection);
+    enabledWidgets.push_back(ui->connect_to);
+    enabledWidgets.push_back(ui->start_ping);
+    enabledWidgets.push_back(ui->ping);
+    enabledWidgets.push_back(ui->contime);
+    enabledWidgets.push_back(ui->dhcpcd);
+    term = new SysAPI("ping 8.8.8.8", 800);
+    QString exitPingStd = term->catLimited()->readAllStandardOutput();
+    QString result;
+    if (exitPingStd.isEmpty())
+    {
+        result = "no";
+    }
+    if (!exitPingStd.isEmpty())
+    {
+        result = "yes";
+    }
+    ui->connection->setText("Connection: " + result);
+}
+
+void MainWindow::on_start_ping_clicked()
+{
+    QString server = ui->connect_to->text();
+    QString time = ui->contime->text();
+    if (server.isEmpty())
+    {
+        server = "null_server";
+    }
+    term = new SysAPI("ping " + server, time.toInt()*1000);
+    ui->ping->setText(term->catLimited()->readAllStandardOutput());
+}
+
+void MainWindow::on_dhcpcd_clicked()
+{
+    term = new SysAPI("echo " + OS->getSudo() + " | sudo -S echo test\n");
+    QString exitSudoStd = term->cat()->readAllStandardOutput();
+    if (exitSudoStd.isEmpty())
+    {
+        ui->statusbar->showMessage("Wrong sudo password");
+        return;
+    }
+    if (!exitSudoStd.isEmpty())
+    {
+        term = new SysAPI("echo " + OS->getSudo() + " | sudo -S dhcpcd && echo check");
+        term->cat();
+        term = new SysAPI("ping 8.8.8.8", 800);
+        QString exitPingStd = term->catLimited()->readAllStandardOutput();
+        QString result;
+        if (exitPingStd.isEmpty())
+        {
+            result = "no";
+        }
+        if (!exitPingStd.isEmpty())
+        {
+            result = "yes";
+        }
+        ui->connection->setText("Connection: " + result);
     }
 }

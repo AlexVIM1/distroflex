@@ -8,6 +8,15 @@ SysAPI::SysAPI(QString cmd) :
 
 }
 
+// Constructor to initialize command data and time
+
+SysAPI::SysAPI(QString cmd, int time) :
+    itsCmd(cmd),
+    itsTime(time)
+{
+
+}
+
 // Deleting command data
 
 SysAPI::~SysAPI()
@@ -23,5 +32,14 @@ QProcess *SysAPI::cat()
     itsProc.write(itsCmd.toUtf8());
     itsProc.closeWriteChannel();
     itsProc.waitForFinished();
+    return &itsProc;
+}
+
+QProcess *SysAPI::catLimited()
+{
+    itsProc.start("sh");
+    itsProc.write(itsCmd.toUtf8());
+    itsProc.closeWriteChannel();
+    itsProc.waitForFinished(itsTime);
     return &itsProc;
 }

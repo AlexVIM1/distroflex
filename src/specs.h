@@ -7,6 +7,8 @@
 #include <QString>
 #include <QSettings>
 
+enum PACKMGRS { PACMAN, APT, ZYPPER };
+
 class specs
 {
 public:
@@ -27,6 +29,8 @@ public:
     QString getSudo() const { return itsSudo; }
     void setVideoSettingsButtonAction(QString videoSettingsButtonAction) { itsVideoSettingsButtonAction = videoSettingsButtonAction; }
     QString getVideoSettingsButtonAction() const { return itsVideoSettingsButtonAction; }
+    void setPackMgr(PACKMGRS packMgr) { itsPackMgr = packMgr; }
+    PACKMGRS getPackMgr() const { return itsPackMgr; }
     specs() { }
 private:
     QString itsKernel;
@@ -38,6 +42,7 @@ private:
     QString itsModel;
     QString itsSudo;
     QString itsVideoSettingsButtonAction;
+    PACKMGRS itsPackMgr;
 };
 
 #endif // SPECS_H

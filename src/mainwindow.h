@@ -11,6 +11,7 @@
 #include "specs.h"
 #include "tickthread.h"
 #include "root.h"
+#include "confirm.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -50,6 +51,26 @@ private slots:
 
     void on_pushButton_clicked();
 
+    void on_alsaslider_sliderMoved(int position);
+
+    void on_pushButton_4_clicked();
+
+    void on_searchbutton_clicked();
+
+    void on_removebutton_clicked();
+
+    void on_installbutton_clicked();
+
+    void on_upd_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_start_ping_clicked();
+
+    void on_dhcpcd_clicked();
+
+    void on_micslider_sliderMoved(int position);
+
 private:
     Ui::MainWindow *ui;
 
@@ -77,6 +98,10 @@ private:
     // Root dialog
 
     root *dialog;
+
+    // Confirm dialog
+
+    confirm *confirmOperation;
 };
 
 #endif // MAINWINDOW_H

@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1079</width>
-    <height>1052</height>
+    <width>1121</width>
+    <height>1471</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -28,14 +28,7 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
-    <item row="1" column="1">
-     <widget class="Line" name="line_2">
-      <property name="orientation">
-       <enum>Qt::Vertical</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="2">
+    <item row="0" column="2">
      <spacer name="horizontalSpacer">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -48,7 +41,7 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="4">
+    <item row="0" column="4">
      <spacer name="horizontalSpacer_2">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
@@ -61,7 +54,7 @@
       </property>
      </spacer>
     </item>
-    <item row="1" column="0">
+    <item row="0" column="0">
      <layout class="QVBoxLayout" name="distroSpecsArea">
       <property name="spacing">
        <number>0</number>
@@ -88,8 +81,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -112,8 +105,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -134,8 +127,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -158,8 +151,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -180,8 +173,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -204,8 +197,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -223,8 +216,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -238,8 +231,8 @@
        <widget class="QPushButton" name="DEsettings">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -257,8 +250,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -278,8 +271,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -297,8 +290,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -316,8 +309,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -335,8 +328,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -356,8 +349,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -375,8 +368,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -396,8 +389,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -415,8 +408,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -436,8 +429,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -455,8 +448,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -476,8 +469,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -489,7 +482,8 @@
        <widget class="QLineEdit" name="deviceEditMount">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -499,6 +493,12 @@
       </item>
       <item>
        <widget class="QLineEdit" name="directoryEdit">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -508,8 +508,8 @@
        <widget class="QPushButton" name="mount">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -521,7 +521,8 @@
        <widget class="QLineEdit" name="deviceEditUMount">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -533,8 +534,8 @@
        <widget class="QPushButton" name="umount">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -546,7 +547,8 @@
        <widget class="QLineEdit" name="mkfsDeviceEdit">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
        </widget>
@@ -555,7 +557,8 @@
        <widget class="QLineEdit" name="mkfsEdit">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
        </widget>
@@ -564,8 +567,8 @@
        <widget class="QPushButton" name="mkfs">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -583,8 +586,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -604,8 +607,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -623,8 +626,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -644,8 +647,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
           <weight>50</weight>
           <bold>false</bold>
          </font>
@@ -659,7 +662,7 @@
        <widget class="QLineEdit" name="wres">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -669,7 +672,7 @@
        <widget class="QLineEdit" name="hres">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -679,7 +682,7 @@
        <widget class="QLineEdit" name="hz">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -689,7 +692,7 @@
        <widget class="QLineEdit" name="input">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
+          <family>DejaVu Sans</family>
           <pointsize>10</pointsize>
          </font>
         </property>
@@ -699,8 +702,8 @@
        <widget class="QPushButton" name="changedisp">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -712,8 +715,8 @@
        <widget class="QPushButton" name="videosettingbutton">
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
@@ -731,8 +734,8 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -752,12 +755,12 @@
         </property>
         <property name="font">
          <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
          </font>
         </property>
         <property name="text">
-         <string>Volume:</string>
+         <string>Master volume:</string>
         </property>
        </widget>
       </item>
@@ -769,70 +772,186 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="patext">
+       <widget class="QLabel" name="micvol">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
-        <property name="font">
-         <font>
-          <family>Droid Sans</family>
-          <pointsize>14</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
         <property name="text">
-         <string>PulseAudio:</string>
+         <string>Rear Mic volume:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="pavol">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="font">
-         <font>
-          <family>Droid Sans</family>
-          <pointsize>12</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>Volume:</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QSlider" name="paslider">
+       <widget class="QSlider" name="micslider">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="packagestext">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>Packages:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="searchpackage">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="searchbutton">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Search</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="packages">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="html">
+         <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'DejaVu Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;packages&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="installpackage">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="installbutton">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Install</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="removepackage">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removebutton">
+        <property name="font">
+         <font>
+          <family>DejaVu Sans</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>Remove</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="upd">
+        <property name="text">
+         <string>Update all</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="dhcpcd">
+        <property name="text">
+         <string>Connect via DHCPCD</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="connection">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>Connection: </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="connect_to"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="contime"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="start_ping">
+        <property name="text">
+         <string>Check connection and speed</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTextBrowser" name="ping"/>
+      </item>
      </layout>
     </item>
-    <item row="0" column="0">
-     <widget class="QLabel" name="label">
-      <property name="font">
-       <font>
-        <family>Droid Sans</family>
-        <pointsize>20</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>Configure</string>
+    <item row="0" column="1">
+     <widget class="Line" name="line_2">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
+    <item row="0" column="3">
      <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0,0,0,0" columnstretch="0,0">
       <property name="leftMargin">
        <number>100</number>
@@ -907,7 +1026,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Other</string>
+         <string>Network</string>
         </property>
         <property name="icon">
          <iconset resource="../res/res.qrc">
@@ -1048,7 +1167,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1079</width>
+     <width>1121</width>
      <height>20</height>
     </rect>
    </property>

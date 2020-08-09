@@ -2,12 +2,9 @@
 #define TICKTHREAD_H
 
 #include <QThread>
-#include <QProcess>
+#include "sysapi.h"
 #include <QLabel>
-#include <fstream>
-#include <QFile>
-#include <QTextStream>
-#include <QMessageBox>
+#include <QStatusBar>
 
 // Creating QThread-based class
 // Overrriding void run() to base there code
@@ -15,20 +12,18 @@
 class tickThread : public QThread
 {
 public:
-    void run();
-    tickThread(QString cmd, char cmdClock[255], int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock);
+    void run() override;
+    tickThread(QString cmd, QString cmdClock, int time, QWidget *nowSession, QWidget *sessionCPU, QLabel *output, QLabel *outputClock);
     ~tickThread();
 private:
-    QProcess itsProc;
+    SysAPI *itsProc;
     QString itsCmd;
-    char itsCmdClock[255];
+    QString itsCmdClock;
     int itsTime;
     QWidget *itsNowSession;
     QWidget *itsSessionCPU;
     QLabel *itsOutput;
     QLabel *itsOutputClock;
-    std::ofstream *fout;
-    std::ifstream *fin;
 };
 
 #endif // TICKTHREAD_H
