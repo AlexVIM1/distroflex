@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # DistroFlex
 Cross-distro settings tool
 
