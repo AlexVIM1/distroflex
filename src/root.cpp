@@ -9,6 +9,7 @@ root::root(specs *os, SysAPI *term) :
 {
     ui->setupUi(this);
     ui->sudo->setPlaceholderText("sudo password");
+    ui->sudo->setEchoMode(QLineEdit::Password);
 }
 
 root::~root()
