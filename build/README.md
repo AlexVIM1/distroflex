@@ -13,7 +13,7 @@ Cross-distro settings tool
 
 # Get as package
 * Binary files in branch pkg [Go](https://github.com/AlexVIM1/distroflex/tree/pkg) [Download](https://raw.githubusercontent.com/AlexVIM1/distroflex/pkg/distroflex-1.0-1-x86_64.tar.gz) 
-* Arch [Get](https://aur.archlinux.org/packages/distroflex)
+* Arch (soon)
 * DEB (soon)
 * RPM (soon)
 * FlatPak (soon)

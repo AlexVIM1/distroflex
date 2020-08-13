@@ -1,0 +1,10 @@
+[Desktop Entry]
+Encoding=UTF-8
+Version=1.0
+Type=Application
+Terminal=false
+Exec=/usr/bin/distroflex
+Name=DistroFlex
+GenericName=Cross-distro settings tool
+Comment=Set your distro as you need
+Icon=/usr/share/pixmaps/distroflex-icon.png

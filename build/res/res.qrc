@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>distroflex-icon.png</file>
+        <file>tux.png</file>
+        <file>display-icon.png</file>
+        <file>kbd-icon.png</file>
+        <file>kernel-icon.png</file>
+        <file>video-icon.png</file>
+        <file>audio-icon.png</file>
+        <file>software-icon.png</file>
+        <file>other-icon.png</file>
+        <file>plasma-settings-icon.png</file>
+        <file>nvidia.png</file>
+        <file>lxqt-icon.png</file>
+        <file>gnome-icon.png</file>
+        <file>xfce-icon.png</file>
+    </qresource>
+</RCC>
