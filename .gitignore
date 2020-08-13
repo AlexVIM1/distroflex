@@ -1,2 +1,3 @@
-distroflex-1.0-1-x86_64.tar.gz
+build/*
+distroflex-1.0-1.tar.gz
 .git
